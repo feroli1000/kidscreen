@@ -1,11 +1,11 @@
 import { Module } from 'vuex';
 import { StateInterface } from '../index';
-import state, { QuestionarioStateInterface } from './state';
+import state, { QuestionnaireStateInterface } from './state';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 
-const QuestionarioModule: Module<QuestionarioStateInterface, StateInterface> = {
+const QuestionarioModule: Module<QuestionnaireStateInterface, StateInterface> = {
   namespaced: true,
   actions,
   getters,

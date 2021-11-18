@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         /> -->
 
-        <q-toolbar-title>{{ titulo }}</q-toolbar-title>
+        <q-toolbar-title>{{ title }}</q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -44,6 +44,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'src/store';
+import { YOUNG_TYPE, PARENT_TYPE } from 'components/constants';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -53,21 +54,24 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const store = useStore();
-    const numero = computed(() => store.state.questionario.numero);
-    const tipo = computed(() => store.state.questionario.tipo);
+    const questionnaireNumber = computed(
+      () => store.state.questionnaire.questionnaire_number
+    );
+    const personType = computed(() => store.state.questionnaire.person_type);
+    //const personType = computed(() => store.getters.questionnaire.person_type);
 
-    const titulo = computed(() => {
+    const title = computed(() => {
       let ret = 'Questionário KIDSCREEN ';
-      numero.value > 0 && (ret += numero.value);
+      questionnaireNumber.value > 0 && (ret += questionnaireNumber.value);
 
-      tipo.value === 1 && (ret += ' - Jovem');
-      tipo.value === 2 && (ret += ' - Pais/Tutores');
+      personType.value === YOUNG_TYPE && (ret += ' - Jovem');
+      personType.value === PARENT_TYPE && (ret += ' - Pais/Tutores');
 
       return ret;
     });
 
     return {
-      titulo,
+      title,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;

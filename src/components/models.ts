@@ -1,3 +1,9 @@
+export interface Question {
+  value: number;
+  text: string;
+}
+
+
 export interface Todo {
   id: number;
   content: string;

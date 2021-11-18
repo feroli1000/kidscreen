@@ -6,8 +6,8 @@ import {
   useStore as vuexUseStore,
 } from 'vuex';
 
-import questionario from './questionario';
-import { QuestionarioStateInterface } from './questionario/state';
+import questionnaire from './questionnaire';
+import { QuestionnaireStateInterface } from './questionnaire/state';
 
 /*
  * If not building with SSR mode, you can
@@ -23,7 +23,7 @@ export interface StateInterface {
   // example: ExampleStateInterface;
   // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
   // example: unknown
-  questionario: QuestionarioStateInterface;
+  questionnaire: QuestionnaireStateInterface;
 }
 
 // provide typings for `this.$store`
@@ -40,7 +40,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> =
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<StateInterface>({
     modules: {
-      questionario,
+      questionnaire,
     },
 
     // enable strict mode (adds overhead!)
