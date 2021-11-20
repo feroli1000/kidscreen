@@ -5,7 +5,7 @@
       size="xl"
       color="orange-10"
       class="full-width"
-      @click="selectQuestionnaireNumber(52)"
+      @click="selectQuestionnaireModel(52)"
       >Kidscreen 52</q-btn
     >
     <q-btn
@@ -13,7 +13,7 @@
       size="xl"
       color="pink-10"
       class="full-width"
-      @click="selectQuestionnaireNumber(27)"
+      @click="selectQuestionnaireModel(27)"
       >Kidscreen 27</q-btn
     >
     <q-btn
@@ -21,7 +21,7 @@
       size="xl"
       color="green-10"
       class="full-width"
-      @click="selectQuestionnaireNumber(10)"
+      @click="selectQuestionnaireModel(10)"
       >Kidscreen 10</q-btn
     >
     <div v-if="isQuestionnaireSelected" class="full-width">
@@ -49,6 +49,7 @@
         </q-card-section>
       </q-card>
     </div>
+    <!-- <pre>{{ questionnaire }}</pre> -->
   </q-page>
 </template>
 
@@ -56,7 +57,8 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
-import { YOUNG_TYPE } from 'components/constants';
+import { YOUNG_TYPE } from 'src/helpers/constants';
+import { Questionnaire, QuestionnaireInterface } from 'src/helpers/models';
 
 export default defineComponent({
   name: 'PageIndex',
@@ -67,21 +69,37 @@ export default defineComponent({
 
     const isQuestionnaireSelected = computed(() => selected.value > 0);
 
-    function selectQuestionnaireNumber(questionnaire_number: number) {
-      store.commit(
-        'questionnaire/SET_QUESTIONNAIRE_NUMBER',
-        questionnaire_number
-      );
-      selected.value = questionnaire_number;
-    }
-
     onMounted(() => {
-      store.commit('questionnaire/SET_QUESTIONNAIRE_NUMBER', 0);
-      store.commit('questionnaire/SET_PERSON_TYPE', 0);
+      store.commit('questionnaire/RESET');
     });
 
+    const questionnaire = computed<Questionnaire>(
+      () => store.state.questionnaire.questionnaire
+    );
+
+    /* const questionnaire = computed({
+      get: () => store.state.questionnaire.questionnaire,
+      set: (val) => {
+        store.commit('questionnaire/SET_QUESTIONNAIRE', val);
+      },
+    }); */
+
+    function getQuestionnaireClone(): QuestionnaireInterface {
+      return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
+    }
+
+    function selectQuestionnaireModel(model: number) {
+      const quest = getQuestionnaireClone();
+      quest.model = model;
+      store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
+      selected.value = model;
+    }
+
     function selectPersonType(type: number) {
-      store.commit('questionnaire/SET_PERSON_TYPE', type);
+      const quest = getQuestionnaireClone();
+      quest.person_type = type;
+      store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
+
       const person = type === YOUNG_TYPE ? 'young' : 'parent';
       router.push(`/presentation-${person}`).catch(() => {
         /* Ignore */
@@ -89,10 +107,11 @@ export default defineComponent({
     }
 
     return {
-      selectQuestionnaireNumber,
+      selectQuestionnaireModel,
       selectPersonType,
       isQuestionnaireSelected,
       selected,
+      questionnaire,
     };
   },
 });

@@ -85,17 +85,19 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Question } from 'components/models';
+import { useRouter } from 'vue-router';
+import { OptionsInterface } from 'src/helpers/models';
 
 export default defineComponent({
   name: 'PresentationParent',
   setup() {
+    const router = useRouter();
     const day = ref(null);
     const month = ref(null);
     const year = ref(null);
     const parent = ref(0);
     const gender = ref(0);
-    const parents_list = ref<Question[]>([
+    const parents_list = ref<OptionsInterface[]>([
       { value: 1, text: 'Mãe' },
       { value: 2, text: 'Pai' },
       { value: 3, text: 'Madrasta / Companheira do pai' },
@@ -104,13 +106,15 @@ export default defineComponent({
       { value: 6, text: 'Avô' },
       { value: 7, text: 'Outro' },
     ]);
-    const genders_list = ref<Question[]>([
+    const genders_list = ref<OptionsInterface[]>([
       { value: 1, text: 'Feminino' },
       { value: 2, text: 'Masculino' },
     ]);
 
     function forward() {
-      alert('avancaar');
+      router.push('/questionnaire').catch(() => {
+        /* Ignore */
+      });
     }
 
     return {

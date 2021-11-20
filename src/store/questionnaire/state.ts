@@ -1,12 +1,12 @@
+import { QuestionnaireInterface, Questionnaire } from 'src/helpers/models';
+
 export interface QuestionnaireStateInterface {
-  questionnaire_number: number;
-  person_type: number; // 1 - Young   2 - Parents
+  questionnaire: QuestionnaireInterface;
 }
 
 function state(): QuestionnaireStateInterface {
   return {
-    questionnaire_number: 0,
-    person_type: 0,
+    questionnaire: new Questionnaire(),
   };
 }
 

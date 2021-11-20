@@ -67,6 +67,13 @@
           <q-item-section class="text-body1">
             {{ d.text }}
           </q-item-section>
+          <q-item-section>
+            <q-input
+              v-if="d.value === 2"
+              v-model="disease_description"
+              label="Qual?"
+            />
+          </q-item-section>
         </q-item>
       </q-list>
     </div>
@@ -85,28 +92,61 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { Question } from 'components/models';
+import { defineComponent, computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'src/store';
+//import { QUESTIONNAIRES } from 'src/helpers/constants';
+import {
+  OptionsInterface,
+  Questionnaire,
+  QuestionnaireInterface,
+} from 'src/helpers/models';
 
 export default defineComponent({
   name: 'PresentationYoung',
   setup() {
+    const router = useRouter();
+    const store = useStore();
     const day = ref(null);
     const month = ref(null);
     const year = ref(null);
     const gender = ref(0);
     const disease = ref(0);
-    const genders_list = ref<Question[]>([
+    const disease_description = ref('');
+    const genders_list = ref<OptionsInterface[]>([
       { value: 1, text: 'Feminino' },
       { value: 2, text: 'Masculino' },
     ]);
-    const no_yes_list = ref<Question[]>([
+    const no_yes_list = ref<OptionsInterface[]>([
       { value: 1, text: 'Não' },
       { value: 2, text: 'Sim' },
     ]);
 
+    const questionnaire = computed<Questionnaire>(
+      () => store.state.questionnaire.questionnaire
+    );
+
+    function getQuestionnaireClone(): QuestionnaireInterface {
+      return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
+    }
+
     function forward() {
-      alert('avancaar');
+      const quest = getQuestionnaireClone();
+      quest.gender = gender.value === 1 ? 'F' : 'M';
+      quest.disease = disease.value;
+      quest.disease_description = disease_description.value;
+      quest.birthday =
+        String(day.value).padStart(2, '0') +
+        '/' +
+        String(month.value).padStart(2, '0') +
+        '/' +
+        String(year.value);
+
+      store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
+      const model = 'kidscreen52';
+      router.push(`/questionnaire/${model}/young`).catch(() => {
+        /* Ignore */
+      });
     }
 
     return {
@@ -117,6 +157,8 @@ export default defineComponent({
       day,
       month,
       year,
+      questionnaire,
+      disease_description,
       forward,
     };
   },

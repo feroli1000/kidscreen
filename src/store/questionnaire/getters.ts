@@ -3,13 +3,13 @@ import { StateInterface } from '../index';
 import { QuestionnaireStateInterface } from './state';
 
 const getters: GetterTree<QuestionnaireStateInterface, StateInterface> = {
-  getQuestionnaireNumber(state) {
-    return state.questionnaire_number;
+  getQuestionnaire(state) {
+    return state.questionnaire;
   },
 
-  getPersonType(state) {
-    return state.person_type;
-  },
+  /* getQuestionnaireClone(state): QuestionnaireInterface {
+    return <Questionnaire>JSON.parse(JSON.stringify(state.questionnaire));
+  }, */
 };
 
 export default getters;

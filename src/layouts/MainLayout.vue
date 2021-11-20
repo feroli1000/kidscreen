@@ -44,7 +44,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'src/store';
-import { YOUNG_TYPE, PARENT_TYPE } from 'components/constants';
+import { YOUNG_TYPE, PARENT_TYPE } from 'src/helpers/constants';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -54,15 +54,15 @@ export default defineComponent({
   setup() {
     const leftDrawerOpen = ref(false);
     const store = useStore();
-    const questionnaireNumber = computed(
-      () => store.state.questionnaire.questionnaire_number
+    const questionnaire = computed(
+      () => store.state.questionnaire.questionnaire
     );
-    const personType = computed(() => store.state.questionnaire.person_type);
-    //const personType = computed(() => store.getters.questionnaire.person_type);
+    const questionnaireModel = computed(() => questionnaire.value.model);
+    const personType = computed(() => questionnaire.value.person_type);
 
     const title = computed(() => {
       let ret = 'Questionário KIDSCREEN ';
-      questionnaireNumber.value > 0 && (ret += questionnaireNumber.value);
+      questionnaireModel.value > 0 && (ret += questionnaireModel.value);
 
       personType.value === YOUNG_TYPE && (ret += ' - Jovem');
       personType.value === PARENT_TYPE && (ret += ' - Pais/Tutores');

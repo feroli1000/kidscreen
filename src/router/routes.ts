@@ -14,6 +14,15 @@ const routes: RouteRecordRaw[] = [
         path: '/presentation-parent',
         component: () => import('pages/PresentationParent.vue'),
       },
+      {
+        path: '/questionnaire/:model/:person_type',
+        component: () => import('src/pages/Questionnaire.vue'),
+        props:true
+      },
+      {
+        path: '/score',
+        component: () => import('src/pages/Score.vue'),
+      },
     ],
   },
 
