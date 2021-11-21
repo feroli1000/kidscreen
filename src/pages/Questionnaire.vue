@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-px-lg q-pt-md q-pb-xl">
-    <Question
+    <QuestionContainer
       :question="getQuestion()"
       :num="question.N"
       :key="active"
@@ -21,7 +21,7 @@
     </div>
     <QuestionnaireDebug
       class="q-mt-xl"
-      :button_all="isDevelopmentMode"
+      :button_all="isDevelopmentMode()"
       @all="fillAllForDevelpment"
     />
   </q-page>
@@ -32,17 +32,12 @@ import { defineComponent, ref, reactive, computed, onMounted } from 'vue';
 import { useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
-import Question from 'components/Question.vue';
+import QuestionContainer from 'components/QuestionContainer.vue';
 import QuestionnaireDebug from 'components/QuestionnaireDebug.vue';
 import { findQuestionByIndex } from '../helpers/kidscreen';
 import { getRandomInt, isDevelopmentMode } from 'src/helpers';
 import { calcScore52, calcScore27, calcScore10 } from 'src/helpers/kidscreen';
-import {
-  Questionnaire,
-  QuestionInterface,
-  Score,
-  ScoreInterface,
-} from 'src/helpers/models';
+import { Questionnaire, Question, Score } from 'src/helpers/models';
 import {
   QUESTIONNARIE_52,
   QUESTIONNARIE_27,
@@ -52,7 +47,7 @@ import {
 export default defineComponent({
   name: 'Questionnaire',
   components: {
-    Question,
+    QuestionContainer,
     QuestionnaireDebug,
   },
   setup() {
@@ -69,7 +64,7 @@ export default defineComponent({
     const questionnaireModel = computed(() => questionnaire.value.model);
     const questionnaireType = computed(() => questionnaire.value.person_type);
 
-    let question: QuestionInterface | undefined;
+    let question: Question | undefined;
     question = reactive(
       findQuestionByIndex(questionnaireModel.value, questionnaireType.value, 0)
     );
@@ -168,8 +163,8 @@ export default defineComponent({
       }
     }
 
-    function calculateScore() {
-      let score: ScoreInterface;
+    function calculateScore(): void {
+      let score: Score;
       switch (questionnaireModel.value) {
         case QUESTIONNARIE_52:
           score = calcScore52(questionnaire.value);

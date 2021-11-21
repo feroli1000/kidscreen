@@ -1,10 +1,9 @@
-// import { HEADER_LABELS } from './constants';
-import { QuestionInterface } from './models';
+import { Question } from './models';
 import { HEADER1, HEADER2, HEADER3 } from './constants';
 
 /*    D = Dimension     N = Number     Q = Question      A = Answer    */
 
-const QUESTIONS: QuestionInterface[] = [
+export const QUESTIONS: Question[] = [
   // Bem-estar Físico
   { D: 1, N: '1.1', Q: '', A: 0, H: HEADER1 },
   { D: 1, N: '1.2', Q: '', A: 0, H: HEADER2 },
@@ -68,9 +67,3 @@ const QUESTIONS: QuestionInterface[] = [
   { D: 10, N: '10.2', Q: '', A: 0, H: HEADER3 },
   { D: 10, N: '10.3', Q: '', A: 0, H: HEADER3 },
 ];
-
-function findByPosition(posistion: number) {
-  return { ...QUESTIONS[posistion] };
-}
-
-export { QUESTIONS, findByPosition };

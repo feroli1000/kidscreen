@@ -1,10 +1,9 @@
-// import { HEADER_LABELS } from './constants';
-import { QuestionInterface } from './models';
+import { Question } from './models';
 import { HEADER2 } from './constants';
 
 /*    D = Dimension     N = Number     Q = Question      A = Answer    */
 
-const QUESTIONS: QuestionInterface[] = [
+export const QUESTIONS: Question[] = [
   { D: 1, N: '1.1', Q: '', A: 0, H: HEADER2 },
   { D: 1, N: '1.2', Q: '', A: 0, H: HEADER2 },
   { D: 1, N: '1.3', Q: '', A: 0, H: HEADER2 },
@@ -16,5 +15,3 @@ const QUESTIONS: QuestionInterface[] = [
   { D: 1, N: '1.9', Q: '', A: 0, H: HEADER2 },
   { D: 1, N: '1.10', Q: '', A: 0, H: HEADER2 },
 ];
-
-export { QUESTIONS };

@@ -1,10 +1,7 @@
-import {
-  Question,
-  Questionnaire,
-  QuestionnaireInterface,
-  Score,
-  ScoreInterface,
-} from './models';
+import { Question, Questionnaire, Score } from './models';
+import { QUESTIONS as QUESTIONS_52 } from './kidscreen52';
+import { QUESTIONS as QUESTIONS_27 } from './kidscreen27';
+import { QUESTIONS as QUESTIONS_10 } from './kidscreen10';
 import {
   YOUNG_TYPE,
   PARENT_TYPE,
@@ -20,9 +17,6 @@ import {
   Q10_YOUNG_QUESTIONS,
   Q10_PARENT_QUESTIONS,
 } from './kidscreen-pt';
-import { QUESTIONS as QUESTIONS_52 } from './kidscreen52';
-import { QUESTIONS as QUESTIONS_27 } from './kidscreen27';
-import { QUESTIONS as QUESTIONS_10 } from './kidscreen10';
 
 function findQuestionByIndex(
   model: number,
@@ -66,7 +60,7 @@ Index = (Sum of 52 items) * 100 / 260
 */
 
 function calcDimensionQ52(
-  questionnaire: QuestionnaireInterface,
+  questionnaire: Questionnaire,
   dimension: number
 ): number {
   const dimension_questions = questionnaire.questions.filter(
@@ -76,13 +70,13 @@ function calcDimensionQ52(
   dimension_questions.forEach((elem) => {
     sum += elem.A;
   });
-  //           [1,  2,  3,  4,  5,  6,  7,  8,  9,  10]
-  const divs = [25, 30, 35, 25, 25, 30, 15, 30, 30, 15];
-  const ret = (sum * 100) / divs[dimension - 1];
+  //    dimensions:[1,  2,  3,  4,  5,  6,  7,  8,  9,  10]
+  const divisors = [25, 30, 35, 25, 25, 30, 15, 30, 30, 15];
+  const ret = (sum * 100) / divisors[dimension - 1];
   return parseFloat(ret.toFixed(1));
 }
 
-function calcIndex52(questionnaire: QuestionnaireInterface): number {
+function calcIndex52(questionnaire: Questionnaire): number {
   let sum = 0;
   questionnaire.questions.forEach((elem) => {
     sum += elem.A;
@@ -91,7 +85,7 @@ function calcIndex52(questionnaire: QuestionnaireInterface): number {
   return parseFloat(index.toFixed(1));
 }
 
-function calcScore52(questionnaire: Questionnaire): ScoreInterface {
+function calcScore52(questionnaire: Questionnaire): Score {
   const score = new Score();
   score.Q52_1 = calcDimensionQ52(questionnaire, 1);
   score.Q52_2 = calcDimensionQ52(questionnaire, 2);
@@ -118,7 +112,7 @@ Index = (Sum of 27 items) * 100 / 135
 */
 
 function calcDimensionQ27(
-  questionnaire: QuestionnaireInterface,
+  questionnaire: Questionnaire,
   dimension: number
 ): number {
   const dimension_questions = questionnaire.questions.filter(
@@ -128,13 +122,13 @@ function calcDimensionQ27(
   dimension_questions.forEach((elem) => {
     sum += elem.A;
   });
-  //           [1,  2,  3,  4,  5]
-  const divs = [25, 35, 35, 20, 20];
-  const ret = (sum * 100) / divs[dimension - 1];
+  //    dimensions:[1,  2,  3,  4,  5]
+  const divisors = [25, 35, 35, 20, 20];
+  const ret = (sum * 100) / divisors[dimension - 1];
   return parseFloat(ret.toFixed(1));
 }
 
-function calcIndex27(questionnaire: QuestionnaireInterface): number {
+function calcIndex27(questionnaire: Questionnaire): number {
   let sum = 0;
   questionnaire.questions.forEach((elem) => {
     sum += elem.A;
@@ -143,7 +137,7 @@ function calcIndex27(questionnaire: QuestionnaireInterface): number {
   return parseFloat(index.toFixed(1));
 }
 
-function calcScore27(questionnaire: QuestionnaireInterface): ScoreInterface {
+function calcScore27(questionnaire: Questionnaire): Score {
   const score = new Score();
   score.Q27_1 = calcDimensionQ27(questionnaire, 1);
   score.Q27_2 = calcDimensionQ27(questionnaire, 2);
@@ -159,7 +153,7 @@ Questionnaire 10
 Index = (Sum of 10 items) * 100 / 50
 */
 
-function calcScore10(questionnaire: QuestionnaireInterface): ScoreInterface {
+function calcScore10(questionnaire: Questionnaire): Score {
   const score = new Score();
   let sum = 0;
   questionnaire.questions.forEach((elem) => {

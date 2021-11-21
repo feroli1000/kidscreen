@@ -49,7 +49,6 @@
         </q-card-section>
       </q-card>
     </div>
-    <!-- <pre>{{ questionnaire }}</pre> -->
   </q-page>
 </template>
 
@@ -58,7 +57,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { YOUNG_TYPE, PARENT_TYPE } from 'src/helpers/constants';
-import { Questionnaire, QuestionnaireInterface } from 'src/helpers/models';
+import { Questionnaire } from 'src/helpers/models';
 
 export default defineComponent({
   name: 'PageIndex',
@@ -77,7 +76,7 @@ export default defineComponent({
       () => store.state.questionnaire.questionnaire
     );
 
-    function getQuestionnaireClone(): QuestionnaireInterface {
+    function getQuestionnaireClone(): Questionnaire {
       return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
     }
 

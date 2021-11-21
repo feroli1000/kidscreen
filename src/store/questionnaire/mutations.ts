@@ -1,6 +1,6 @@
 import { MutationTree } from 'vuex';
 import { QuestionnaireStateInterface } from './state';
-import { QuestionnaireInterface, Questionnaire } from 'src/helpers/models';
+import {  Questionnaire } from 'src/helpers/models';
 
 const mutation: MutationTree<QuestionnaireStateInterface> = {
   RESET(state: QuestionnaireStateInterface) {
@@ -8,7 +8,7 @@ const mutation: MutationTree<QuestionnaireStateInterface> = {
   },
   SET_QUESTIONNAIRE(
     state: QuestionnaireStateInterface,
-    value: QuestionnaireInterface
+    value: Questionnaire
   ) {
     state.questionnaire = value;
   },

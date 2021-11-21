@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-px-sm q-pt-md q-pb-xl bg-green-1">
+  <q-page class="q-px-sm q-pt-md q-pb-xl">
     <div class="text-h3 text-center">Resultado</div>
     <q-markup-table
       v-if="showScore52"
@@ -18,7 +18,7 @@
           <td>
             Bem-estar Físico
             <div v-if="debug">
-              <ScoreDebug v-if="debug" :dimension="1" :divider="25" />
+              <ScoreDebug v-if="debug" :dimension="1" :divisor="25" />
             </div>
           </td>
           <td>{{ questionnaire.score.Q52_1 }}</td>
@@ -26,7 +26,7 @@
         <tr>
           <td>
             Bem-estar Psicológico
-            <ScoreDebug v-if="debug" :dimension="2" :divider="30" />
+            <ScoreDebug v-if="debug" :dimension="2" :divisor="30" />
           </td>
           <td>
             {{ questionnaire.score.Q52_2 }}
@@ -35,63 +35,63 @@
         <tr>
           <td>
             Estado Emocional
-            <ScoreDebug v-if="debug" :dimension="3" :divider="35" />
+            <ScoreDebug v-if="debug" :dimension="3" :divisor="35" />
           </td>
           <td>{{ questionnaire.score.Q52_3 }}</td>
         </tr>
         <tr>
           <td>
             Auto Percepção
-            <ScoreDebug v-if="debug" :dimension="4" :divider="25" />
+            <ScoreDebug v-if="debug" :dimension="4" :divisor="25" />
           </td>
           <td>{{ questionnaire.score.Q52_4 }}</td>
         </tr>
         <tr>
           <td>
             Autonomia
-            <ScoreDebug v-if="debug" :dimension="5" :divider="25" />
+            <ScoreDebug v-if="debug" :dimension="5" :divisor="25" />
           </td>
           <td>{{ questionnaire.score.Q52_5 }}</td>
         </tr>
         <tr>
           <td>
             Família/Ambiente Familiar
-            <ScoreDebug v-if="debug" :dimension="6" :divider="30" />
+            <ScoreDebug v-if="debug" :dimension="6" :divisor="30" />
           </td>
           <td>{{ questionnaire.score.Q52_6 }}</td>
         </tr>
         <tr>
           <td>
             Aspectos Financeiros
-            <ScoreDebug v-if="debug" :dimension="7" :divider="15" />
+            <ScoreDebug v-if="debug" :dimension="7" :divisor="15" />
           </td>
           <td>{{ questionnaire.score.Q52_7 }}</td>
         </tr>
         <tr>
           <td>
             Amigos e Apoio Social
-            <ScoreDebug v-if="debug" :dimension="8" :divider="30" />
+            <ScoreDebug v-if="debug" :dimension="8" :divisor="30" />
           </td>
           <td>{{ questionnaire.score.Q52_8 }}</td>
         </tr>
         <tr>
           <td>
             Ambiente Escolar
-            <ScoreDebug v-if="debug" :dimension="9" :divider="30" />
+            <ScoreDebug v-if="debug" :dimension="9" :divisor="30" />
           </td>
           <td>{{ questionnaire.score.Q52_9 }}</td>
         </tr>
         <tr>
           <td>
             Provocação/Bullyng
-            <ScoreDebug v-if="debug" :dimension="10" :divider="15" />
+            <ScoreDebug v-if="debug" :dimension="10" :divisor="15" />
           </td>
           <td>{{ questionnaire.score.Q52_10 }}</td>
         </tr>
         <tr>
           <td>
             Índice Global
-            <ScoreDebug v-if="debug" :is_index="true" :divider="260" />
+            <ScoreDebug v-if="debug" :is_index="true" :divisor="260" />
           </td>
           <td>{{ questionnaire.score.index }}</td>
         </tr>
@@ -114,42 +114,42 @@
         <tr>
           <td>
             Bem-estar Físico
-            <ScoreDebug v-if="debug" :dimension="1" :divider="25" />
+            <ScoreDebug v-if="debug" :dimension="1" :divisor="25" />
           </td>
           <td>{{ questionnaire.score.Q27_1 }}</td>
         </tr>
         <tr>
           <td>
             Bem-estar Psicológico
-            <ScoreDebug v-if="debug" :dimension="2" :divider="35" />
+            <ScoreDebug v-if="debug" :dimension="2" :divisor="35" />
           </td>
           <td>{{ questionnaire.score.Q27_2 }}</td>
         </tr>
         <tr>
           <td>
             Autonomia e Relação com os Pais
-            <ScoreDebug v-if="debug" :dimension="3" :divider="35" />
+            <ScoreDebug v-if="debug" :dimension="3" :divisor="35" />
           </td>
           <td>{{ questionnaire.score.Q27_3 }}</td>
         </tr>
         <tr>
           <td>
             Amigos e Apoio Social
-            <ScoreDebug v-if="debug" :dimension="4" :divider="20" />
+            <ScoreDebug v-if="debug" :dimension="4" :divisor="20" />
           </td>
           <td>{{ questionnaire.score.Q27_4 }}</td>
         </tr>
         <tr>
           <td>
             Ambiente Escolar
-            <ScoreDebug v-if="debug" :dimension="5" :divider="20" />
+            <ScoreDebug v-if="debug" :dimension="5" :divisor="20" />
           </td>
           <td>{{ questionnaire.score.Q27_5 }}</td>
         </tr>
         <tr>
           <td>
             Índice Global
-            <ScoreDebug v-if="debug" :is_index="true" :divider="135" />
+            <ScoreDebug v-if="debug" :is_index="true" :divisor="135" />
           </td>
           <td>{{ questionnaire.score.index }}</td>
         </tr>
@@ -172,7 +172,7 @@
         <tr>
           <td>
             Índice Global
-            <ScoreDebug v-if="debug" :is_index="true" :divider="50" />
+            <ScoreDebug v-if="debug" :is_index="true" :divisor="50" />
           </td>
           <td>{{ questionnaire.score.index }}</td>
         </tr>
@@ -197,8 +197,6 @@ import {
 } from 'src/helpers/constants';
 import { Questionnaire } from 'src/helpers/models';
 
-//import { Questionnaire, QuestionnaireInterface } from 'src/helpers/models';
-
 export default defineComponent({
   name: 'Score',
   components: {
@@ -215,13 +213,13 @@ export default defineComponent({
     );
 
     const showScore52 = computed(
-      () => questionnaire.value.model == QUESTIONNARIE_52
+      () => questionnaire.value.model === QUESTIONNARIE_52
     );
     const showScore27 = computed(
-      () => questionnaire.value.model == QUESTIONNARIE_27
+      () => questionnaire.value.model === QUESTIONNARIE_27
     );
     const showScore10 = computed(
-      () => questionnaire.value.model == QUESTIONNARIE_10
+      () => questionnaire.value.model === QUESTIONNARIE_10
     );
 
     const personTypeLabel = computed(() =>

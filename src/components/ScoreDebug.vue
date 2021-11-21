@@ -16,7 +16,7 @@ export default defineComponent({
       type: Number,
       default: 0,
     },
-    divider: {
+    divisor: {
       type: Number,
       default: 1, // avoid division by zero
     },
@@ -46,14 +46,14 @@ export default defineComponent({
       });
       if (props.is_index) {
         return (
-          '(( Soma de todas as respostas) * 100) / ' + String(props.divider)
+          '(( Soma de todas as respostas) * 100) / ' + String(props.divisor)
         );
       }
-      return '((' + nums + ') * 100) / ' + String(props.divider);
+      return '((' + nums + ') * 100) / ' + String(props.divisor);
     });
 
     const answer = computed(() => {
-      const divider = props.divider;
+      const divisor = props.divisor;
       let nums = '';
       let sum = 0;
 
@@ -63,8 +63,8 @@ export default defineComponent({
         index < dimension_questions.length - 1 && (nums += ' + ');
       });
 
-      const result = parseFloat(((sum * 100) / divider).toFixed(1));
-      return `((${nums} ) * 100) / ${divider}<br>&nbsp;&nbsp;&nbsp;&nbsp;(${sum} * 100) / ${divider} = ${result}`;
+      const result = parseFloat(((sum * 100) / divisor).toFixed(1));
+      return `((${nums} ) * 100) / ${divisor}<br>&nbsp;&nbsp;&nbsp;&nbsp;(${sum} * 100) / ${divisor} = ${result}`;
     });
 
     return { formula, answer };

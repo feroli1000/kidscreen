@@ -1,7 +1,7 @@
-import { QuestionnaireInterface, Questionnaire } from 'src/helpers/models';
+import { Questionnaire } from 'src/helpers/models';
 
 export interface QuestionnaireStateInterface {
-  questionnaire: QuestionnaireInterface;
+  questionnaire: Questionnaire;
 }
 
 function state(): QuestionnaireStateInterface {

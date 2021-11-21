@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page class="q-px-md q-py-lg">
     <PresentationYoung v-if="isPersonTypeYoung" />
 
     <PresentationParent v-if="isPersonTypeParent" />
@@ -139,11 +139,7 @@ import { formatDate, isDevelopmentMode } from 'src/helpers';
 import { PARENT_TYPE, YOUNG_TYPE } from 'src/helpers/constants';
 import PresentationYoung from 'components/PresentationYoung.vue';
 import PresentationParent from 'components/PresentationParent.vue';
-import {
-  OptionsInterface,
-  Questionnaire,
-  QuestionnaireInterface,
-} from 'src/helpers/models';
+import { OptionsInterface, Questionnaire } from 'src/helpers/models';
 
 export default defineComponent({
   name: 'Presentation',
@@ -209,7 +205,7 @@ export default defineComponent({
       }
     });
 
-    function getQuestionnaireClone(): QuestionnaireInterface {
+    function getQuestionnaireClone(): Questionnaire {
       return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
     }
 

@@ -19,22 +19,21 @@
           @click="selectOption(b)"
         />
       </div>
-      <!-- <div>{{ num }} - {{ selected }}</div> -->
     </q-card-section>
   </q-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
-import { QuestionInterface } from 'src/helpers/models';
+import { Question } from 'src/helpers/models';
 import { HEADER_LABELS, DIMENSIONS_52 } from 'src/helpers/constants';
 
 export default defineComponent({
-  name: 'Question',
+  name: 'QuestionContainer',
   emits: ['selected'],
   props: {
     question: {
-      type: Object as () => QuestionInterface | null,
+      type: Object as () => Question | null,
     },
   },
   setup(props, { emit }) {
@@ -86,7 +85,6 @@ export default defineComponent({
       optionText,
       colorButton,
       textColorButton,
-      selected,
     };
   },
 });
