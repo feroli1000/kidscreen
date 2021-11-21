@@ -13,28 +13,32 @@ const HEADER_LABELS = [
   ['Nunca', 'Quase nunca', 'Algumas vezes', 'Quase sempre', 'Sempre'],
 ];
 
-const SECTIONS_52 = [
-  { S: 1, T: 'Bem-estar Físico' },
-  { S: 2, T: 'Bem-estar Psicológico' },
-  { S: 3, T: 'Estado Emocional' },
-  { S: 4, T: 'Auto Percepção' },
-  { S: 5, T: 'Autonomia' },
-  { S: 6, T: 'Família/Ambiente Familiar' },
-  { S: 7, T: 'Aspectos Financeiros' },
-  { S: 8, T: 'Amigos e Apoio Social' },
-  { S: 9, T: 'Ambiente Escolar' },
-  { S: 10, T: 'Provocação/Bullyng' },
+const HEADER1 = 0; // HEADER_LABELS[0]; ['Excelente', 'Muito boa', 'Boa', 'Regular', 'Mal'],
+const HEADER2 = 1; // HEADER_LABELS[1]; ['Nada', 'Um pouco', 'Moderadamente', 'Muito', 'Muitíssimo'],
+const HEADER3 = 2; // HEADER_LABELS[2]; ['Nunca', 'Quase nunca', 'Algumas vezes', 'Quase sempre', 'Sempre'],
+
+const DIMENSIONS_52 = [
+  { D: 1, T: 'Bem-estar Físico' },
+  { D: 2, T: 'Bem-estar Psicológico' },
+  { D: 3, T: 'Estado Emocional' },
+  { D: 4, T: 'Auto Percepção' },
+  { D: 5, T: 'Autonomia' },
+  { D: 6, T: 'Família/Ambiente Familiar' },
+  { D: 7, T: 'Aspectos Financeiros' },
+  { D: 8, T: 'Amigos e Apoio Social' },
+  { D: 9, T: 'Ambiente Escolar' },
+  { D: 10, T: 'Provocação/Bullyng' },
 ];
 
-const SECTIONS_27 = [
-  { S: 1, T: 'Bem-estar Físico' },
-  { S: 2, T: 'Bem-estar Psicológico' },
-  { S: 3, T: 'Autonomia e Relação com os Pais' },
-  { S: 4, T: 'Amigos e Apoio Social' },
-  { S: 9, T: 'Ambiente Escolar' },
+const DIMENSIONS_27 = [
+  { D: 1, T: 'Bem-estar Físico' },
+  { D: 2, T: 'Bem-estar Psicológico' },
+  { D: 3, T: 'Autonomia e Relação com os Pais' },
+  { D: 4, T: 'Amigos e Apoio Social' },
+  { D: 9, T: 'Ambiente Escolar' },
 ];
 
-const SECTIONS_10 = [
+const DIMENSIONS_10 = [
   /* Empty */
 ];
 
@@ -46,7 +50,10 @@ export {
   QUESTIONNARIE_27,
   QUESTIONNARIE_52,
   HEADER_LABELS,
-  SECTIONS_52,
-  SECTIONS_27,
-  SECTIONS_10,
+  HEADER1,
+  HEADER2,
+  HEADER3,
+  DIMENSIONS_52,
+  DIMENSIONS_27,
+  DIMENSIONS_10,
 };

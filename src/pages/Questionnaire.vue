@@ -1,5 +1,5 @@
 <template>
-  <q-page class="row items-center q-px-lg q-pb-xl">
+  <q-page class="q-px-lg q-pt-md q-pb-xl">
     <Question
       :question="getQuestion()"
       :num="question.N"
@@ -10,14 +10,20 @@
     <q-btn
       size="xl"
       :color="canForward() ? 'green' : 'grey'"
-      class="full-width"
-      :label="'Avançar (' + active + ')'"
+      class="full-width q-mt-md"
+      label="Avançar"
       icon-right="send"
       :disable="!canForward()"
       @click="forward"
     />
-    <!-- <pre>{{ getQuestion() }}</pre> -->
-    <QuestionnaireDebug class="q-mt-md" @all="fillAllQuestions" />
+    <div v-if="isDevelopmentMode()">
+      {{ currentAnswer }} {{ canForward() }} {{ getQuestion() }}
+    </div>
+    <QuestionnaireDebug
+      class="q-mt-xl"
+      :button_all="isDevelopmentMode"
+      @all="fillAllForDevelpment"
+    />
   </q-page>
 </template>
 
@@ -28,8 +34,8 @@ import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import Question from 'components/Question.vue';
 import QuestionnaireDebug from 'components/QuestionnaireDebug.vue';
-import { findByPosition } from '../helpers/kidscreen52-young';
-import { getRandomInt } from 'src/helpers';
+import { findQuestionByIndex } from '../helpers/kidscreen';
+import { getRandomInt, isDevelopmentMode } from 'src/helpers';
 import { calcScore52, calcScore27, calcScore10 } from 'src/helpers/kidscreen';
 import {
   Questionnaire,
@@ -54,15 +60,19 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const active = ref(0);
-
-    let question: QuestionInterface | undefined;
-    question = reactive(findByPosition(0));
+    const currentAnswer = ref(0);
 
     const questionnaire = computed<Questionnaire>(
       () => store.state.questionnaire.questionnaire
     );
 
     const questionnaireModel = computed(() => questionnaire.value.model);
+    const questionnaireType = computed(() => questionnaire.value.person_type);
+
+    let question: QuestionInterface | undefined;
+    question = reactive(
+      findQuestionByIndex(questionnaireModel.value, questionnaireType.value, 0)
+    );
 
     onMounted(() => {
       // Deny direct url access
@@ -72,12 +82,17 @@ export default defineComponent({
         });
         return;
       }
+      // Fill all questions
       const questions_length = questionnaire.value.model;
       const actual_length = questionnaire.value.questions.length;
       const quest = getQuestionnaireClone();
       if (actual_length < questions_length) {
         for (let i = actual_length - 1; i < questions_length; i++) {
-          quest.questions[i] = findByPosition(i);
+          quest.questions[i] = findQuestionByIndex(
+            questionnaireModel.value,
+            questionnaireType.value,
+            i
+          );
         }
         store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
       }
@@ -105,9 +120,7 @@ export default defineComponent({
     }
 
     function canForward() {
-      //const answer = question?.A ?? 0;
-      const answer = 1;
-      return answer > 0 && active.value < questionsLength();
+      return currentAnswer.value > 0 && active.value < questionsLength();
     }
 
     function getQuestion() {
@@ -126,6 +139,7 @@ export default defineComponent({
         });
         return;
       }
+
       if (isFinished()) {
         calculateScore();
 
@@ -139,6 +153,7 @@ export default defineComponent({
         });
         return;
       }
+      currentAnswer.value = 0;
       active.value++;
       question = reactive({ ...questionnaire.value.questions[active.value] });
     }
@@ -146,6 +161,7 @@ export default defineComponent({
     function setAnswer(value: number) {
       if (typeof question === 'object') {
         question.A = value;
+        currentAnswer.value = value;
         const quest = getQuestionnaireClone();
         quest.questions[active.value] = { ...question };
         store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
@@ -167,32 +183,33 @@ export default defineComponent({
         default:
           score = new Score();
       }
-      console.log(questionnaireModel.value, score);
       const quest = getQuestionnaireClone();
       quest.score = { ...score };
       store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
     }
 
-    function fillAllQuestions() {
+    function fillAllForDevelpment() {
       const quest = getQuestionnaireClone();
       for (let i = 0; i < questionsLength(); i++) {
         quest.questions[i].A = getRandomInt(1, 5);
       }
       store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
       active.value = questionsLength() - 1;
-      //forward();
-      //typeof question === 'object' && (question.A = 3);
+      currentAnswer.value = quest.questions[active.value].A;
+      question = reactive({ ...questionnaire.value.questions[active.value] });
     }
 
     return {
       question,
       active,
       questionnaire,
+      currentAnswer,
       forward,
       canForward,
       setAnswer,
       getQuestion,
-      fillAllQuestions,
+      isDevelopmentMode,
+      fillAllForDevelpment,
     };
   },
 });

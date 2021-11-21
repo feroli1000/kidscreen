@@ -34,7 +34,7 @@
             size="xl"
             color="purple-10"
             class="full-width q-my-xl"
-            @click="selectPersonType(1)"
+            @click="selectPersonType(YOUNG_TYPE)"
             >Jovem</q-btn
           >
         </q-card-section>
@@ -43,7 +43,7 @@
             size="xl"
             color="purple-10"
             class="full-width q-my-xl"
-            @click="selectPersonType(2)"
+            @click="selectPersonType(PARENT_TYPE)"
             >Pais/Tutores</q-btn
           >
         </q-card-section>
@@ -57,7 +57,7 @@
 import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
-import { YOUNG_TYPE } from 'src/helpers/constants';
+import { YOUNG_TYPE, PARENT_TYPE } from 'src/helpers/constants';
 import { Questionnaire, QuestionnaireInterface } from 'src/helpers/models';
 
 export default defineComponent({
@@ -77,13 +77,6 @@ export default defineComponent({
       () => store.state.questionnaire.questionnaire
     );
 
-    /* const questionnaire = computed({
-      get: () => store.state.questionnaire.questionnaire,
-      set: (val) => {
-        store.commit('questionnaire/SET_QUESTIONNAIRE', val);
-      },
-    }); */
-
     function getQuestionnaireClone(): QuestionnaireInterface {
       return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
     }
@@ -100,8 +93,7 @@ export default defineComponent({
       quest.person_type = type;
       store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
 
-      const person = type === YOUNG_TYPE ? 'young' : 'parent';
-      router.push(`/presentation-${person}`).catch(() => {
+      router.push('/presentation').catch(() => {
         /* Ignore */
       });
     }
@@ -112,6 +104,8 @@ export default defineComponent({
       isQuestionnaireSelected,
       selected,
       questionnaire,
+      YOUNG_TYPE,
+      PARENT_TYPE,
     };
   },
 });

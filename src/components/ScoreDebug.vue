@@ -7,15 +7,12 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
+import { useStore } from 'src/store';
 import { Questionnaire } from 'src/helpers/models';
 
 export default defineComponent({
   props: {
-    questionnaire: {
-      type: Questionnaire,
-      default: new Questionnaire(),
-    },
-    section: {
+    dimension: {
       type: Number,
       default: 0,
     },
@@ -29,17 +26,23 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const section_questions = props.is_index
-      ? props.questionnaire.questions
-      : props.questionnaire.questions.filter(
-          (elem) => elem.S === props.section
+    const store = useStore();
+
+    const questionnaire = computed<Questionnaire>(
+      () => store.state.questionnaire.questionnaire
+    );
+
+    const dimension_questions = props.is_index
+      ? questionnaire.value.questions
+      : questionnaire.value.questions.filter(
+          (elem) => elem.D === props.dimension
         );
 
     const formula = computed(() => {
       let nums = '';
-      section_questions.forEach((elem, index) => {
+      dimension_questions.forEach((elem, index) => {
         nums += String(elem.N);
-        index < section_questions.length - 1 && (nums += ' + ');
+        index < dimension_questions.length - 1 && (nums += ' + ');
       });
       if (props.is_index) {
         return (
@@ -54,10 +57,10 @@ export default defineComponent({
       let nums = '';
       let sum = 0;
 
-      section_questions.forEach((elem, index) => {
+      dimension_questions.forEach((elem, index) => {
         nums += String(elem.A);
         sum += elem.A;
-        index < section_questions.length - 1 && (nums += ' + ');
+        index < dimension_questions.length - 1 && (nums += ' + ');
       });
 
       const result = parseFloat(((sum * 100) / divider).toFixed(1));

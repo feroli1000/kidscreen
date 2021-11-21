@@ -14,7 +14,7 @@
     </caption>
     <tbody>
       <tr v-for="q in questions" :key="q">
-        <td>{{ q.N }} - {{ q.A }}</td>
+        <td>{{ q.N }}</td>
         <td :class="answer(1, q.A)">1</td>
         <td :class="answer(2, q.A)">2</td>
         <td :class="answer(3, q.A)">3</td>

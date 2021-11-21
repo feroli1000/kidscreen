@@ -2,10 +2,10 @@
   <q-card class="q-pb-md">
     <q-card-section>
       <div class="text-center">
-        {{ sectionText }} <br />
+        {{ dimensionText }} <br />
         Considerando a última semana:
       </div>
-      <div class="text-h6 text-bold">{{ questionText }}</div>
+      <div class="text-h6 text-bold q-mt-sm">{{ questionText }}</div>
     </q-card-section>
     <q-card-section
       ><div>
@@ -27,7 +27,7 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 import { QuestionInterface } from 'src/helpers/models';
-import { HEADER_LABELS, SECTIONS_52 } from 'src/helpers/constants';
+import { HEADER_LABELS, DIMENSIONS_52 } from 'src/helpers/constants';
 
 export default defineComponent({
   name: 'Question',
@@ -36,20 +36,20 @@ export default defineComponent({
     question: {
       type: Object as () => QuestionInterface | null,
     },
-    num: {
-      type: String,
-      default: '',
-    },
   },
   setup(props, { emit }) {
-    const sections = computed(() => {
-      return SECTIONS_52;
+    const selected = ref(0);
+
+    const dimensions = computed(() => {
+      return DIMENSIONS_52;
     });
 
-    const sectionText = computed(() => {
-      const questionSection = props.question?.S ?? 0;
-      const section = sections.value.find((elem) => elem.S === questionSection);
-      return section?.T;
+    const dimensionText = computed(() => {
+      const questionDimension = props.question?.D ?? 0;
+      const dimension = dimensions.value.find(
+        (elem) => elem.D === questionDimension
+      );
+      return dimension?.T;
     });
 
     const questionText = computed(() => {
@@ -58,8 +58,6 @@ export default defineComponent({
       return `${num} - ${ques}`;
     });
 
-    const selected = ref(0);
-
     function optionText(option: number) {
       const idx = props.question?.H ?? -1;
       const texts = HEADER_LABELS[idx];
@@ -67,11 +65,13 @@ export default defineComponent({
     }
 
     function colorButton(option: number) {
-      return option === selected.value ? 'purple' : 'white';
+      return option === props.question?.A ? 'purple' : 'white';
+      //return option === selected.value ? 'purple' : 'white';
     }
 
     function textColorButton(option: number) {
-      return option === selected.value ? 'white' : 'black';
+      return option === props.question?.A ? 'white' : 'black';
+      //return option === selected.value ? 'white' : 'black';
     }
 
     function selectOption(option: number) {
@@ -80,7 +80,7 @@ export default defineComponent({
     }
 
     return {
-      sectionText,
+      dimensionText,
       questionText,
       selectOption,
       optionText,

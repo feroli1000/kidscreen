@@ -1,9 +1,17 @@
 export interface QuestionInterface {
-  S: number; // Section
+  D: number; // Dimension
   N: string; // Number ('1.1', '2.6' ... )
   Q: string; // Question
   A: number; // Answer
   H: number; // Headers
+}
+
+export class Question implements QuestionInterface {
+  public D = 0;
+  public N = '';
+  public Q = '';
+  public A = 0;
+  public H = 0;
 }
 
 export interface QuestionnaireInterface {
@@ -11,8 +19,10 @@ export interface QuestionnaireInterface {
   person_type: number;
   gender: string;
   birthday: string;
+  parent: number;
   disease: number;
   disease_description: string;
+  answered_at: string;
   questions: QuestionInterface[];
   score: ScoreInterface;
 }
@@ -22,8 +32,10 @@ export class Questionnaire implements QuestionnaireInterface {
   public person_type: number;
   public gender: string;
   public birthday: string;
+  public parent: number;
   public disease: number;
   public disease_description: string;
+  public answered_at: string;
   public questions: QuestionInterface[];
   public score: ScoreInterface;
 
@@ -32,8 +44,10 @@ export class Questionnaire implements QuestionnaireInterface {
     this.person_type = 0;
     this.gender = '';
     this.birthday = '';
+    this.parent = 0;
     this.disease = 0;
     this.disease_description = '';
+    this.answered_at = '';
     this.questions = [];
     this.score = new Score();
   }
