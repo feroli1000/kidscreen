@@ -1,33 +1,33 @@
 <template>
   <q-page class="row items-center justify-evenly q-px-lg q-pb-xl">
     <q-btn
-      v-if="!isQuestionnaireSelected"
+      v-if="!isModelSelected"
       size="xl"
       color="orange-10"
       class="full-width"
-      @click="selectQuestionnaireModel(52)"
+      @click="selectModel(52)"
       >Kidscreen 52</q-btn
     >
     <q-btn
-      v-if="!isQuestionnaireSelected"
+      v-if="!isModelSelected"
       size="xl"
       color="pink-10"
       class="full-width"
-      @click="selectQuestionnaireModel(27)"
+      @click="selectModel(27)"
       >Kidscreen 27</q-btn
     >
     <q-btn
-      v-if="!isQuestionnaireSelected"
+      v-if="!isModelSelected"
       size="xl"
       color="green-10"
       class="full-width"
-      @click="selectQuestionnaireModel(10)"
+      @click="selectModel(10)"
       >Kidscreen 10</q-btn
     >
-    <div v-if="isQuestionnaireSelected" class="full-width">
+    <div v-if="isModelSelected" class="full-width">
       <q-card>
         <q-card-section>
-          <div class="text-h2 text-center">Kidscreen {{ selected }}</div>
+          <div class="text-h2 text-center">Kidscreen {{ model_selected }}</div>
         </q-card-section>
         <q-card-section>
           <q-btn
@@ -57,6 +57,7 @@ import { defineComponent, ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { YOUNG_TYPE, PARENT_TYPE } from 'src/helpers/constants';
+import { getQuestionnaireClone } from 'src/helpers/kidscreen';
 import { Questionnaire } from 'src/helpers/models';
 
 export default defineComponent({
@@ -64,9 +65,9 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const store = useStore();
-    const selected = ref(0);
+    const model_selected = ref(0);
 
-    const isQuestionnaireSelected = computed(() => selected.value > 0);
+    const isModelSelected = computed(() => model_selected.value > 0);
 
     onMounted(() => {
       store.commit('questionnaire/RESET');
@@ -76,19 +77,15 @@ export default defineComponent({
       () => store.state.questionnaire.questionnaire
     );
 
-    function getQuestionnaireClone(): Questionnaire {
-      return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
-    }
-
-    function selectQuestionnaireModel(model: number) {
-      const quest = getQuestionnaireClone();
+    function selectModel(model: number) {
+      const quest = getQuestionnaireClone(questionnaire.value);
       quest.model = model;
       store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
-      selected.value = model;
+      model_selected.value = model;
     }
 
     function selectPersonType(type: number) {
-      const quest = getQuestionnaireClone();
+      const quest = getQuestionnaireClone(questionnaire.value);
       quest.person_type = type;
       store.commit('questionnaire/SET_QUESTIONNAIRE', quest);
 
@@ -98,10 +95,10 @@ export default defineComponent({
     }
 
     return {
-      selectQuestionnaireModel,
+      selectModel,
       selectPersonType,
-      isQuestionnaireSelected,
-      selected,
+      isModelSelected,
+      model_selected,
       questionnaire,
       YOUNG_TYPE,
       PARENT_TYPE,

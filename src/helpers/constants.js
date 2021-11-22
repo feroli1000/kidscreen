@@ -1,6 +1,9 @@
 export const YOUNG_TYPE = 1;
 export const PARENT_TYPE = 2;
 
+export const HAVE_DISEASE_OPTION = 2;
+export const ANOTHER_PARENT_OPTION = 7;
+
 export const QUESTIONNAIRES = ['kidscreen52', 'kidscreen27', 'kidscreen10'];
 
 export const QUESTIONNARIE_52 = 52;

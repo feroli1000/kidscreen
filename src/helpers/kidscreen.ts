@@ -164,4 +164,14 @@ function calcScore10(questionnaire: Questionnaire): Score {
   return score;
 }
 
-export { findQuestionByIndex, calcScore52, calcScore27, calcScore10 };
+function getQuestionnaireClone(questionnaire: Questionnaire): Questionnaire {
+  return <Questionnaire>JSON.parse(JSON.stringify(questionnaire));
+}
+
+export {
+  findQuestionByIndex,
+  calcScore52,
+  calcScore27,
+  calcScore10,
+  getQuestionnaireClone,
+};

@@ -12,11 +12,25 @@
           >
         </q-item>
         <q-item v-for="p in parents_list" :key="p.value" tag="label" v-ripple>
-          <q-item-section avatar>
-            <q-radio v-model="parent" :val="p.value" color="orange" />
-          </q-item-section>
-          <q-item-section class="text-body1">
-            {{ p.text }}
+          <q-item-section>
+            <div class="flex items-center text-body1">
+              <q-radio
+                v-model="parent"
+                :val="p.value"
+                color="orange"
+                error-message="Campo obrigatório"
+                :error="parentValidate()"
+              />
+              <div class="q-mr-md">{{ p.text }}</div>
+              <q-input
+                v-if="p.value === ANOTHER_PARENT_OPTION"
+                v-model="parent_description"
+                label="Quem?"
+                stack-label
+                error-message="Informe seu problema"
+                :error="parentDescriptionValidate()"
+              />
+            </div>
           </q-item-section>
         </q-item>
       </q-list>
@@ -85,8 +99,8 @@
           >
         </q-item>
         <q-item v-for="d in no_yes_list" :key="d.value" tag="label" v-ripple>
-          <q-item-section avatar>
-            <div class="flex flex-center justify-between text-body1">
+          <q-item-section>
+            <div class="flex items-center text-body1">
               <q-radio
                 v-model="disease"
                 :val="d.value"
@@ -96,7 +110,7 @@
               />
               <div class="q-mr-md">{{ d.text }}</div>
               <q-input
-                v-if="d.value === 2"
+                v-if="d.value === HAVE_DISEASE_OPTION"
                 v-model="disease_description"
                 label="Qual?"
                 stack-label
@@ -136,10 +150,16 @@ import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { formatDate, isDevelopmentMode } from 'src/helpers';
-import { PARENT_TYPE, YOUNG_TYPE } from 'src/helpers/constants';
+import { getQuestionnaireClone } from 'src/helpers/kidscreen';
 import PresentationYoung from 'components/PresentationYoung.vue';
 import PresentationParent from 'components/PresentationParent.vue';
 import { OptionsInterface, Questionnaire } from 'src/helpers/models';
+import {
+  PARENT_TYPE,
+  YOUNG_TYPE,
+  HAVE_DISEASE_OPTION,
+  ANOTHER_PARENT_OPTION,
+} from 'src/helpers/constants';
 
 export default defineComponent({
   name: 'Presentation',
@@ -158,6 +178,7 @@ export default defineComponent({
     const parent = ref(0);
     const disease = ref(0);
     const disease_description = ref('');
+    const parent_description = ref('');
     const genders_list = ref<OptionsInterface[]>([
       { value: 1, text: 'Feminino' },
       { value: 2, text: 'Masculino' },
@@ -205,34 +226,6 @@ export default defineComponent({
       }
     });
 
-    function getQuestionnaireClone(): Questionnaire {
-      return <Questionnaire>JSON.parse(JSON.stringify(questionnaire.value));
-    }
-
-    function genderValidate() {
-      return false;
-    }
-
-    function dayValidate() {
-      return false;
-    }
-
-    function monthValidate() {
-      return false;
-    }
-
-    function yearValidate() {
-      return false;
-    }
-
-    function diseaseValidate() {
-      return false;
-    }
-
-    function diseaseDescriptionValidate() {
-      return false;
-    }
-
     function canForward(): boolean {
       const d = ~~day.value >= 1 && ~~day.value <= 31;
       const m = ~~month.value >= 1 && ~~month.value <= 12;
@@ -245,12 +238,21 @@ export default defineComponent({
         if (disease.value < 1) {
           return false;
         }
-        if (disease.value === 2 && disease_description.value.length < 1) {
+        if (
+          disease.value === HAVE_DISEASE_OPTION &&
+          disease_description.value.length < 1
+        ) {
           return false;
         }
       }
       if (isPersonTypeParent.value) {
         if (parent.value < 1) {
+          return false;
+        }
+        if (
+          parent.value === ANOTHER_PARENT_OPTION &&
+          parent_description.value.length < 1
+        ) {
           return false;
         }
       }
@@ -265,7 +267,7 @@ export default defineComponent({
         });
         return;
       }
-      const quest = getQuestionnaireClone();
+      const quest = getQuestionnaireClone(questionnaire.value);
       quest.gender = gender.value === 1 ? 'F' : 'M';
       quest.disease = disease.value;
       quest.disease_description = String(disease_description.value);
@@ -296,12 +298,15 @@ export default defineComponent({
       disease.value = 2;
       disease_description.value = 'Abcde';
       parent.value = 3;
+      parent_description.value = 'Fghijkl';
       day.value = 2;
       month.value = 10;
       year.value = 2010;
     }
 
     return {
+      HAVE_DISEASE_OPTION,
+      ANOTHER_PARENT_OPTION,
       isPersonTypeYoung,
       isPersonTypeParent,
       genderLabel,
@@ -316,6 +321,7 @@ export default defineComponent({
       month,
       year,
       questionnaire,
+      parent_description,
       disease_description,
       isDevelopmentMode,
       forward,
@@ -324,10 +330,45 @@ export default defineComponent({
       dayValidate,
       monthValidate,
       yearValidate,
+      parentValidate,
       diseaseValidate,
       fillAllForDevelpment,
+      parentDescriptionValidate,
       diseaseDescriptionValidate,
     };
   },
 });
+
+// @TODO Implements validators
+function genderValidate() {
+  return false;
+}
+
+function dayValidate() {
+  return false;
+}
+
+function monthValidate() {
+  return false;
+}
+
+function yearValidate() {
+  return false;
+}
+
+function diseaseValidate() {
+  return false;
+}
+
+function diseaseDescriptionValidate() {
+  return false;
+}
+
+function parentValidate() {
+  return false;
+}
+
+function parentDescriptionValidate() {
+  return false;
+}
 </script>

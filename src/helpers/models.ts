@@ -1,23 +1,10 @@
-// Used only here
-/*export*/ interface QuestionnaireInterface {
-  model: number;
-  person_type: number;
-  gender: string;
-  birthday: string;
-  parent: number;
-  disease: number;
-  disease_description: string;
-  answered_at: string;
-  questions: Question[];
-  score: Score;
-}
-
-export class Questionnaire implements QuestionnaireInterface {
+export class Questionnaire {
   public model: number;
   public person_type: number;
   public gender: string;
   public birthday: string;
   public parent: number;
+  public parent_description: string;
   public disease: number;
   public disease_description: string;
   public answered_at: string;
@@ -30,6 +17,7 @@ export class Questionnaire implements QuestionnaireInterface {
     this.gender = '';
     this.birthday = '';
     this.parent = 0;
+    this.parent_description = '';
     this.disease = 0;
     this.disease_description = '';
     this.answered_at = '';
