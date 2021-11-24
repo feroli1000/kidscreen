@@ -1,5 +1,9 @@
 <template>
-  <q-page class="q-px-md q-py-lg">
+  <q-page class="q-px-md q-pb-lg">
+    <div class="text-body1 text-bold q-my-md">
+      QUALIDADE DE VIDA RELACIONADA À SAÚDE
+    </div>
+
     <PresentationYoung v-if="isPersonTypeYoung" />
 
     <PresentationParent v-if="isPersonTypeParent" />
@@ -11,7 +15,7 @@
             >Quem está respondendo este questionário?</q-item-section
           >
         </q-item>
-        <q-item v-for="p in parents_list" :key="p.value" tag="label" v-ripple>
+        <q-item v-for="p in PARENTS_LIST" :key="p.value" tag="label" v-ripple>
           <q-item-section>
             <div class="flex items-center text-body1">
               <q-radio
@@ -19,7 +23,7 @@
                 :val="p.value"
                 color="orange"
                 error-message="Campo obrigatório"
-                :error="parentValidate()"
+                :error="!parentValid()"
               />
               <div class="q-mr-md">{{ p.text }}</div>
               <q-input
@@ -27,8 +31,11 @@
                 v-model="parent_description"
                 label="Quem?"
                 stack-label
-                error-message="Informe seu problema"
-                :error="parentDescriptionValidate()"
+                error-message="Informe seu grau relacionamento"
+                :error="
+                  hasAnotherParent &&
+                  !parentDescriptionValid(parent_description)
+                "
               />
             </div>
           </q-item-section>
@@ -63,8 +70,8 @@
             v-model="day"
             label="Dia"
             mask="##"
-            error-message="Campo obrigatório"
-            :error="dayValidate()"
+            error-message="Valor entre 1 e 31"
+            :error="day && !dayValid(day)"
           />
         </div>
         <div class="col">
@@ -73,8 +80,8 @@
             v-model="month"
             label="Mês"
             mask="##"
-            error-message="Campo obrigatório"
-            :error="monthValidate()"
+            error-message="Valor entre 1 e 12"
+            :error="month && !monthValid(month)"
           />
         </div>
         <div class="col">
@@ -83,8 +90,8 @@
             v-model="year"
             label="Ano"
             mask="####"
-            error-message="Campo obrigatório"
-            :error="yearValidate()"
+            :error-message="errorYearMessage()"
+            :error="year && !yearValid(year)"
           />
         </div>
       </div>
@@ -106,7 +113,7 @@
                 :val="d.value"
                 color="orange"
                 error-message="Campo obrigatório"
-                :error="diseaseValidate()"
+                :error="diseaseValid()"
               />
               <div class="q-mr-md">{{ d.text }}</div>
               <q-input
@@ -115,7 +122,9 @@
                 label="Qual?"
                 stack-label
                 error-message="Informe seu problema"
-                :error="diseaseDescriptionValidate()"
+                :error="
+                  hasDisease && !diseaseDescriptionValid(disease_description)
+                "
               />
             </div>
           </q-item-section>
@@ -149,6 +158,7 @@ import { defineComponent, computed, ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
+import { PARENTS_LIST } from 'src/helpers/constants';
 import { formatDate, isDevelopmentMode } from 'src/helpers';
 import { getQuestionnaireClone } from 'src/helpers/kidscreen';
 import PresentationYoung from 'components/PresentationYoung.vue';
@@ -187,16 +197,6 @@ export default defineComponent({
       { value: 1, text: 'Não' },
       { value: 2, text: 'Sim' },
     ]);
-    const parents_list = ref<OptionsInterface[]>([
-      { value: 1, text: 'Mãe' },
-      { value: 2, text: 'Pai' },
-      { value: 3, text: 'Madrasta / Companheira do pai' },
-      { value: 4, text: 'Padrasto / Companheiro da mãe' },
-      { value: 5, text: 'Avó' },
-      { value: 6, text: 'Avô' },
-      { value: 7, text: 'Outro' },
-    ]);
-
     const questionnaire = computed<Questionnaire>(
       () => store.state.questionnaire.questionnaire
     );
@@ -215,6 +215,11 @@ export default defineComponent({
       isPersonTypeYoung.value
         ? 'Qual é sua data de nascimento?'
         : 'Qual a data de nascimento do/a jovem entrevistado/a?'
+    );
+
+    const hasDisease = computed(() => disease.value === 2);
+    const hasAnotherParent = computed(
+      () => parent.value === ANOTHER_PARENT_OPTION
     );
 
     onMounted(() => {
@@ -270,8 +275,9 @@ export default defineComponent({
       const quest = getQuestionnaireClone(questionnaire.value);
       quest.gender = gender.value === 1 ? 'F' : 'M';
       quest.disease = disease.value;
-      quest.disease_description = String(disease_description.value);
+      quest.disease_description = disease_description.value;
       quest.parent = parent.value;
+      quest.parent_description = parent_description.value;
       quest.birthday = formatDate(
         day.value || 0,
         month.value || 0,
@@ -307,13 +313,13 @@ export default defineComponent({
     return {
       HAVE_DISEASE_OPTION,
       ANOTHER_PARENT_OPTION,
+      PARENTS_LIST,
       isPersonTypeYoung,
       isPersonTypeParent,
       genderLabel,
       birthdayLabel,
       parent,
       gender,
-      parents_list,
       genders_list,
       no_yes_list,
       disease,
@@ -323,18 +329,21 @@ export default defineComponent({
       questionnaire,
       parent_description,
       disease_description,
+      parentValid,
+      diseaseValid,
+      hasDisease,
+      hasAnotherParent,
+      parentDescriptionValid,
+      diseaseDescriptionValid,
       isDevelopmentMode,
       forward,
       canForward,
       genderValidate,
-      dayValidate,
-      monthValidate,
-      yearValidate,
-      parentValidate,
-      diseaseValidate,
+      dayValid,
+      monthValid,
+      yearValid,
+      errorYearMessage,
       fillAllForDevelpment,
-      parentDescriptionValidate,
-      diseaseDescriptionValidate,
     };
   },
 });
@@ -344,31 +353,39 @@ function genderValidate() {
   return false;
 }
 
-function dayValidate() {
+function dayValid(day: number) {
+  return day >= 1 && day <= 31;
+}
+
+function monthValid(month: number) {
+  return month >= 1 && month <= 12;
+}
+
+function yearValid(year: number) {
+  const actual_year = new Date().getFullYear();
+  return year >= actual_year - 18 && year <= actual_year - 6;
+}
+
+function errorYearMessage() {
+  const actual_year = new Date().getFullYear();
+  const min = actual_year - 18;
+  const max = actual_year - 6;
+  return `Ano deve estar entre ${min} e ${max}`;
+}
+
+function diseaseValid() {
   return false;
 }
 
-function monthValidate() {
+function diseaseDescriptionValid(value: string) {
+  return value.length > 0;
+}
+
+function parentValid() {
   return false;
 }
 
-function yearValidate() {
-  return false;
-}
-
-function diseaseValidate() {
-  return false;
-}
-
-function diseaseDescriptionValidate() {
-  return false;
-}
-
-function parentValidate() {
-  return false;
-}
-
-function parentDescriptionValidate() {
-  return false;
+function parentDescriptionValid(value: string) {
+  return value.length > 0;
 }
 </script>

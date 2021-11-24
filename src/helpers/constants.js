@@ -20,6 +20,19 @@ export const HEADER1 = 0; // HEADER_LABELS[0];
 export const HEADER2 = 1; // HEADER_LABELS[1];
 export const HEADER3 = 2; // HEADER_LABELS[2];
 
+export const PASC = 1; // Punctuation Ascendant [1..5]
+export const PDESC = 2; // Punctuation Descendant [5..1]
+
+export const PARENTS_LIST = [
+  { value: 1, text: 'Mãe' },
+  { value: 2, text: 'Pai' },
+  { value: 3, text: 'Madrasta / Companheira do pai' },
+  { value: 4, text: 'Padrasto / Companheiro da mãe' },
+  { value: 5, text: 'Avó' },
+  { value: 6, text: 'Avô' },
+  { value: 7, text: 'Outro' },
+];
+
 export const DIMENSIONS_52 = [
   { D: 1, T: 'Bem-estar Físico' },
   { D: 2, T: 'Bem-estar Psicológico' },

@@ -32,6 +32,7 @@ export class Question {
   public Q = ''; // Question
   public A = 0; // Answer
   public H = 0; // Headers
+  public P = 0; // Punctuation (Asc or Desc)
 }
 
 export class Score {

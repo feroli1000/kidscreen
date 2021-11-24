@@ -26,7 +26,13 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue';
 import { Question } from 'src/helpers/models';
-import { HEADER_LABELS, DIMENSIONS_52 } from 'src/helpers/constants';
+import { invertOption } from 'src/helpers/kidscreen';
+import {
+  HEADER_LABELS,
+  DIMENSIONS_52,
+  PASC,
+  PDESC,
+} from 'src/helpers/constants';
 
 export default defineComponent({
   name: 'QuestionContainer',
@@ -44,9 +50,9 @@ export default defineComponent({
     });
 
     const dimensionText = computed(() => {
-      const questionDimension = props.question?.D ?? 0;
+      const question_dimension = props.question?.D ?? 0;
       const dimension = dimensions.value.find(
-        (elem) => elem.D === questionDimension
+        (elem) => elem.D === question_dimension
       );
       return dimension?.T;
     });
@@ -60,22 +66,33 @@ export default defineComponent({
     function optionText(option: number) {
       const idx = props.question?.H ?? -1;
       const texts = HEADER_LABELS[idx];
-      return texts[option - 1];
+      return texts[option - 1] + ` (${optionsValues()[option - 1]})`;
     }
 
     function colorButton(option: number) {
+      if (props.question?.P === PDESC) {
+        option = invertOption(option);
+      }
       return option === props.question?.A ? 'purple' : 'white';
       //return option === selected.value ? 'purple' : 'white';
     }
 
     function textColorButton(option: number) {
+      if (props.question?.P === PDESC) {
+        option = invertOption(option);
+      }
       return option === props.question?.A ? 'white' : 'black';
       //return option === selected.value ? 'white' : 'black';
     }
 
     function selectOption(option: number) {
-      selected.value = option;
+      const options = optionsValues();
+      selected.value = options[option - 1];
       emit('selected', selected.value);
+    }
+
+    function optionsValues() {
+      return props.question?.P === PASC ? [1, 2, 3, 4, 5] : [5, 4, 3, 2, 1];
     }
 
     return {

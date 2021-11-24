@@ -164,8 +164,26 @@ function calcScore10(questionnaire: Questionnaire): Score {
   return score;
 }
 
+// ====================================
+// Utils
+// ====================================
+
 function getQuestionnaireClone(questionnaire: Questionnaire): Questionnaire {
   return <Questionnaire>JSON.parse(JSON.stringify(questionnaire));
+}
+
+function invertOption(option: number) {
+  switch (option) {
+    case 1:
+      return 5;
+    case 2:
+      return 4;
+    case 4:
+      return 2;
+    case 5:
+      return 1;
+  }
+  return option; // 3
 }
 
 export {
@@ -173,5 +191,6 @@ export {
   calcScore52,
   calcScore27,
   calcScore10,
+  invertOption,
   getQuestionnaireClone,
 };

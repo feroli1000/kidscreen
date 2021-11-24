@@ -15,11 +15,11 @@
     <tbody>
       <tr v-for="q in questions" :key="q">
         <td>{{ q.N }}</td>
-        <td :class="answer(1, q.A)">1</td>
-        <td :class="answer(2, q.A)">2</td>
-        <td :class="answer(3, q.A)">3</td>
-        <td :class="answer(4, q.A)">4</td>
-        <td :class="answer(5, q.A)">5</td>
+        <td :class="qAnswer(1, q)">{{ qPunctuation(1, q.P) }}</td>
+        <td :class="qAnswer(2, q)">{{ qPunctuation(2, q.P) }}</td>
+        <td :class="qAnswer(3, q)">{{ qPunctuation(3, q.P) }}</td>
+        <td :class="qAnswer(4, q)">{{ qPunctuation(4, q.P) }}</td>
+        <td :class="qAnswer(5, q)">{{ qPunctuation(5, q.P) }}</td>
       </tr>
     </tbody>
   </q-markup-table>
@@ -28,7 +28,9 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'src/store';
-import { Questionnaire } from 'src/helpers/models';
+import { PASC } from 'src/helpers/constants';
+import { invertOption } from 'src/helpers/kidscreen';
+import { Questionnaire, Question } from 'src/helpers/models';
 
 export default defineComponent({
   name: 'QuestionnaireDebug',
@@ -52,13 +54,19 @@ export default defineComponent({
 
     const questions = computed(() => questionnaire.value.questions);
 
-    function answer(option: number, answer: number) {
+    function qAnswer(option: number, question: Question) {
+      const val = question.P === PASC ? question.A : invertOption(question.A);
       return {
-        'bg-orange': answer === option,
+        'bg-orange': val === option,
       };
     }
 
-    return { questionnaireModel, questions, answer };
+    function qPunctuation(option: number, punctuation: number) {
+      const values = punctuation === PASC ? [1, 2, 3, 4, 5] : [5, 4, 3, 2, 1];
+      return String(values[option - 1]);
+    }
+
+    return { questionnaireModel, questions, qAnswer, qPunctuation };
   },
 });
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>QUALIDADE DE VIDA RELACIONADA À SAÚDE</p>
     <p class="text-bold">Prezados pais ou tutores:</p>
     <p>
       Como está o/a jovem entrevistado/a? Como ele/ela se sente? Isto é o que

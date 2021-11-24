@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>QUALIDADE DE VIDA RELACIONADA À SAÚDE</p>
     <p>
       Olá!!! Como está? Como você se sente? Isto é o que queremos saber de você.
     </p>
