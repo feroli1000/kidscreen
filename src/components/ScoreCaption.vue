@@ -34,7 +34,7 @@ import { Questionnaire } from 'src/helpers/models';
 import {
   YOUNG_TYPE,
   PARENT_TYPE,
-  PARENTS_LIST,
+  PARENTS_OPTIONS,
   ANOTHER_PARENT_OPTION,
 } from 'src/helpers/constants';
 
@@ -66,7 +66,7 @@ export default defineComponent({
     });
 
     const parentLabel = computed(() => {
-      const parent = PARENTS_LIST[questionnaire.value.parent - 1];
+      const parent = PARENTS_OPTIONS[questionnaire.value.parent - 1];
       return parent.value === ANOTHER_PARENT_OPTION
         ? parent.text + ' - ' + questionnaire.value.parent_description
         : parent.text;

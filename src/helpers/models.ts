@@ -58,7 +58,7 @@ export class Score {
   public index = -1;
 }
 
-export interface OptionsInterface {
+export interface OptionsType {
   value: number;
   text: string;
 }

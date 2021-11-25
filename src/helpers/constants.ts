@@ -1,7 +1,9 @@
+import { OptionsType } from './models';
+
 export const YOUNG_TYPE = 1;
 export const PARENT_TYPE = 2;
 
-export const HAVE_DISEASE_OPTION = 2;
+export const HAS_DISEASE_OPTION = 2;
 export const ANOTHER_PARENT_OPTION = 7;
 
 export const QUESTIONNAIRES = ['kidscreen52', 'kidscreen27', 'kidscreen10'];
@@ -23,7 +25,7 @@ export const HEADER3 = 2; // HEADER_LABELS[2];
 export const PASC = 1; // Punctuation Ascendant [1..5]
 export const PDESC = 2; // Punctuation Descendant [5..1]
 
-export const PARENTS_LIST = [
+export const PARENTS_OPTIONS: OptionsType[] = [
   { value: 1, text: 'Mãe' },
   { value: 2, text: 'Pai' },
   { value: 3, text: 'Madrasta / Companheira do pai' },
@@ -31,6 +33,16 @@ export const PARENTS_LIST = [
   { value: 5, text: 'Avó' },
   { value: 6, text: 'Avô' },
   { value: 7, text: 'Outro' },
+];
+
+export const GENDERS_OPTIONS: OptionsType[] = [
+  { value: 1, text: 'Feminino' },
+  { value: 2, text: 'Masculino' },
+];
+
+export const NO_YES_OPTIONS: OptionsType[] = [
+  { value: 1, text: 'Não' },
+  { value: 2, text: 'Sim' },
 ];
 
 export const DIMENSIONS_52 = [

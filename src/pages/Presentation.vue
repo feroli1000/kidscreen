@@ -15,7 +15,12 @@
             >Quem está respondendo este questionário?</q-item-section
           >
         </q-item>
-        <q-item v-for="p in PARENTS_LIST" :key="p.value" tag="label" v-ripple>
+        <q-item
+          v-for="p in PARENTS_OPTIONS"
+          :key="p.value"
+          tag="label"
+          v-ripple
+        >
           <q-item-section>
             <div class="flex items-center text-body1">
               <q-radio
@@ -33,7 +38,7 @@
                 stack-label
                 error-message="Informe seu grau relacionamento"
                 :error="
-                  hasAnotherParent &&
+                  isAnotherParent &&
                   !parentDescriptionValid(parent_description)
                 "
               />
@@ -50,7 +55,12 @@
             genderLabel
           }}</q-item-section>
         </q-item>
-        <q-item v-for="g in genders_list" :key="g.value" tag="label" v-ripple>
+        <q-item
+          v-for="g in GENDERS_OPTIONS"
+          :key="g.value"
+          tag="label"
+          v-ripple
+        >
           <q-item-section avatar>
             <q-radio v-model="gender" :val="g.value" color="orange" />
           </q-item-section>
@@ -105,7 +115,7 @@
             crônico?</q-item-section
           >
         </q-item>
-        <q-item v-for="d in no_yes_list" :key="d.value" tag="label" v-ripple>
+        <q-item v-for="d in NO_YES_OPTIONS" :key="d.value" tag="label" v-ripple>
           <q-item-section>
             <div class="flex items-center text-body1">
               <q-radio
@@ -117,7 +127,7 @@
               />
               <div class="q-mr-md">{{ d.text }}</div>
               <q-input
-                v-if="d.value === HAVE_DISEASE_OPTION"
+                v-if="d.value === HAS_DISEASE_OPTION"
                 v-model="disease_description"
                 label="Qual?"
                 stack-label
@@ -158,16 +168,20 @@ import { defineComponent, computed, ref, onMounted } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useStore } from 'src/store';
-import { PARENTS_LIST } from 'src/helpers/constants';
+import { Questionnaire } from 'src/helpers/models';
 import { formatDate, isDevelopmentMode } from 'src/helpers';
 import { getQuestionnaireClone } from 'src/helpers/kidscreen';
 import PresentationYoung from 'components/PresentationYoung.vue';
 import PresentationParent from 'components/PresentationParent.vue';
-import { OptionsInterface, Questionnaire } from 'src/helpers/models';
+import {
+  PARENTS_OPTIONS,
+  GENDERS_OPTIONS,
+  NO_YES_OPTIONS,
+} from 'src/helpers/constants';
 import {
   PARENT_TYPE,
   YOUNG_TYPE,
-  HAVE_DISEASE_OPTION,
+  HAS_DISEASE_OPTION,
   ANOTHER_PARENT_OPTION,
 } from 'src/helpers/constants';
 
@@ -189,14 +203,7 @@ export default defineComponent({
     const disease = ref(0);
     const disease_description = ref('');
     const parent_description = ref('');
-    const genders_list = ref<OptionsInterface[]>([
-      { value: 1, text: 'Feminino' },
-      { value: 2, text: 'Masculino' },
-    ]);
-    const no_yes_list = ref<OptionsInterface[]>([
-      { value: 1, text: 'Não' },
-      { value: 2, text: 'Sim' },
-    ]);
+
     const questionnaire = computed<Questionnaire>(
       () => store.state.questionnaire.questionnaire
     );
@@ -217,8 +224,8 @@ export default defineComponent({
         : 'Qual a data de nascimento do/a jovem entrevistado/a?'
     );
 
-    const hasDisease = computed(() => disease.value === 2);
-    const hasAnotherParent = computed(
+    const hasDisease = computed(() => disease.value === HAS_DISEASE_OPTION);
+    const isAnotherParent = computed(
       () => parent.value === ANOTHER_PARENT_OPTION
     );
 
@@ -244,7 +251,7 @@ export default defineComponent({
           return false;
         }
         if (
-          disease.value === HAVE_DISEASE_OPTION &&
+          disease.value === HAS_DISEASE_OPTION &&
           disease_description.value.length < 1
         ) {
           return false;
@@ -311,17 +318,17 @@ export default defineComponent({
     }
 
     return {
-      HAVE_DISEASE_OPTION,
+      HAS_DISEASE_OPTION,
       ANOTHER_PARENT_OPTION,
-      PARENTS_LIST,
+      PARENTS_OPTIONS,
+      GENDERS_OPTIONS,
+      NO_YES_OPTIONS,
       isPersonTypeYoung,
       isPersonTypeParent,
       genderLabel,
       birthdayLabel,
       parent,
       gender,
-      genders_list,
-      no_yes_list,
       disease,
       day,
       month,
@@ -332,7 +339,7 @@ export default defineComponent({
       parentValid,
       diseaseValid,
       hasDisease,
-      hasAnotherParent,
+      isAnotherParent,
       parentDescriptionValid,
       diseaseDescriptionValid,
       isDevelopmentMode,
