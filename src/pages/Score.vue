@@ -23,7 +23,7 @@
               <ScoreDebug v-if="debug" :dimension="1" :divisor="25" />
             </div>
           </td>
-          <td>{{ questionnaire.score.Q52_1 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_1) }}</td>
         </tr>
         <tr>
           <td>
@@ -33,7 +33,7 @@
             <ScoreDebug v-if="debug" :dimension="2" :divisor="30" />
           </td>
           <td>
-            {{ questionnaire.score.Q52_2 }}
+            {{ formatScore(questionnaire.score.Q52_2) }}
           </td>
         </tr>
         <tr>
@@ -43,7 +43,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="3" :divisor="35" />
           </td>
-          <td>{{ questionnaire.score.Q52_3 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_3) }}</td>
         </tr>
         <tr>
           <td>
@@ -52,7 +52,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="4" :divisor="25" />
           </td>
-          <td>{{ questionnaire.score.Q52_4 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_4) }}</td>
         </tr>
         <tr>
           <td>
@@ -61,7 +61,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="5" :divisor="25" />
           </td>
-          <td>{{ questionnaire.score.Q52_5 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_5) }}</td>
         </tr>
         <tr>
           <td>
@@ -70,7 +70,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="6" :divisor="30" />
           </td>
-          <td>{{ questionnaire.score.Q52_6 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_6) }}</td>
         </tr>
         <tr>
           <td>
@@ -79,7 +79,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="7" :divisor="15" />
           </td>
-          <td>{{ questionnaire.score.Q52_7 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_7) }}</td>
         </tr>
         <tr>
           <td>
@@ -89,7 +89,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="8" :divisor="30" />
           </td>
-          <td>{{ questionnaire.score.Q52_8 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_8) }}</td>
         </tr>
         <tr>
           <td>
@@ -98,7 +98,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="9" :divisor="30" />
           </td>
-          <td>{{ questionnaire.score.Q52_9 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_9) }}</td>
         </tr>
         <tr>
           <td>
@@ -107,7 +107,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="10" :divisor="15" />
           </td>
-          <td>{{ questionnaire.score.Q52_10 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q52_10) }}</td>
         </tr>
         <tr>
           <td>
@@ -117,7 +117,7 @@
             >
             <ScoreDebug v-if="debug" :is_index="true" :divisor="260" />
           </td>
-          <td>{{ questionnaire.score.index }}</td>
+          <td>{{ formatScore(questionnaire.score.index) }}</td>
         </tr>
       </tbody>
     </q-markup-table>
@@ -143,7 +143,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="1" :divisor="25" />
           </td>
-          <td>{{ questionnaire.score.Q27_1 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q27_1) }}</td>
         </tr>
         <tr>
           <td>
@@ -153,7 +153,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="2" :divisor="35" />
           </td>
-          <td>{{ questionnaire.score.Q27_2 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q27_2) }}</td>
         </tr>
         <tr>
           <td>
@@ -163,7 +163,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="3" :divisor="35" />
           </td>
-          <td>{{ questionnaire.score.Q27_3 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q27_3) }}</td>
         </tr>
         <tr>
           <td>
@@ -173,7 +173,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="4" :divisor="20" />
           </td>
-          <td>{{ questionnaire.score.Q27_4 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q27_4) }}</td>
         </tr>
         <tr>
           <td>
@@ -182,7 +182,7 @@
             >
             <ScoreDebug v-if="debug" :dimension="5" :divisor="20" />
           </td>
-          <td>{{ questionnaire.score.Q27_5 }}</td>
+          <td>{{ formatScore(questionnaire.score.Q27_5) }}</td>
         </tr>
         <tr>
           <td>
@@ -192,7 +192,7 @@
             >
             <ScoreDebug v-if="debug" :is_index="true" :divisor="135" />
           </td>
-          <td>{{ questionnaire.score.index }}</td>
+          <td>{{ formatScore(questionnaire.score.index) }}</td>
         </tr>
       </tbody>
     </q-markup-table>
@@ -208,7 +208,7 @@
         <div class="text-h4">
           Kidscreen 10 <small class="text-grey">{{ personTypeLabel }}</small>
         </div>
-        <ScoreCaption  />
+        <ScoreCaption />
       </caption>
       <tbody>
         <tr>
@@ -219,14 +219,14 @@
             >
             <ScoreDebug v-if="debug" :is_index="true" :divisor="50" />
           </td>
-          <td>{{ questionnaire.score.index }}</td>
+          <td>{{ formatScore(questionnaire.score.index) }}</td>
         </tr>
       </tbody>
     </q-markup-table>
 
     <ScoreTable class="q-mt-lg" :button_all="false" />
 
-    <QuestionnaireDebug v-if="true" class="q-mt-lg" :button_all="false" />
+    <QuestionnaireDebug v-if="false" class="q-mt-lg" :button_all="false" />
   </q-page>
 </template>
 
@@ -277,6 +277,10 @@ export default defineComponent({
       questionnaire.value.person_type === YOUNG_TYPE ? 'Jovem' : 'Pais/Tutores'
     );
 
+    function formatScore(score: number): string {
+      return score.toFixed(1);
+    }
+
     onMounted(() => {
       // Deny direct url access
       if (questionnaire.value.model === 0) {
@@ -293,6 +297,7 @@ export default defineComponent({
       showScore10,
       personTypeLabel,
       debug,
+      formatScore,
     };
   },
 });

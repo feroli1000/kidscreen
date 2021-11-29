@@ -66,7 +66,8 @@ export default defineComponent({
     function optionText(option: number) {
       const idx = props.question?.H ?? -1;
       const texts = HEADER_LABELS[idx];
-      return texts[option - 1] + ` (${optionsValues()[option - 1]})`;
+      return texts[option - 1];
+      //return texts[option - 1] + ` (${optionsValues()[option - 1]})`;
     }
 
     function colorButton(option: number) {

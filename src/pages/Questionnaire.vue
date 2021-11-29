@@ -136,8 +136,15 @@ export default defineComponent({
         calculateScore();
 
         $q.dialog({
-          title: 'Questionário concluído',
-          message: 'Muito obrigado pela sua participação',
+          message:
+            '<div class="text-h5 q-my-lg text-center">Questionário concluído</div>',
+          html: true,
+          ok: {
+            label: 'RESULTADOS',
+            color: 'blue-10',
+            size: 'lg',
+            class: 'q-mx-xl full-width',
+          },
         }).onDismiss(() => {
           router.push('/score').catch(() => {
             /* Ignore */

@@ -48,7 +48,8 @@ export default defineComponent({
       const labels = HEADER_LABELS[question.H];
       const option =
         question.P === PASC ? question.A : invertOption(question.A);
-      return labels[option - 1] + ` (${question.A})`;
+      return labels[option - 1];
+      //return labels[option - 1] + ` (${question.A})`;
     }
 
     return { questionnaireModel, questions, qAnswer };

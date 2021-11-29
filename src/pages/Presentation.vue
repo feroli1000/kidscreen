@@ -107,7 +107,7 @@
       </div>
     </div>
 
-    <div v-if="isPersonTypeYoung" class="q-mt-lg border-top">
+    <div v-if="isPersonTypeYoung" class="q-my-lg border-top">
       <q-list>
         <q-item>
           <q-item-section class="text-body1 text-bold"
@@ -145,7 +145,7 @@
     <q-btn
       size="xl"
       :color="canForward() ? 'green' : 'grey'"
-      class="full-width q-mt-md"
+      class="full-width q-my-xl"
       label="Avançar"
       icon-right="send"
       :disable="!canForward()"
