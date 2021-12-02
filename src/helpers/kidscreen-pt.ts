@@ -59,7 +59,7 @@ export const Q52_YOUNG_QUESTIONS = [
   'Você teve uma boa relação com seus professores?',
   // 10. Provocação/Bullying
   'Você sentiu medo de outros jovens?',
-  'Outros jovens zombaram (“gozaram”) você?',
+  'Outros jovens zombaram de você?',
   'Outros jovens intimidaram ou ameaçaram você?',
 ];
 
@@ -124,7 +124,7 @@ export const Q52_PARENT_QUESTIONS = [
   'O/A jovem teve uma boa relação com seus professores?',
   // 10. Provocação/Bullying
   'O/A jovem sentiu medo de outros jovens?',
-  'Outras crianças/adolescentes zombaram (“gozaram”) o/a jovem?',
+  'Outras crianças/adolescentes zombaram do/a jovem?',
   'Outras crianças/adolescentes intimidaram ou ameaçaram o/a jovem?',
 ];
 
