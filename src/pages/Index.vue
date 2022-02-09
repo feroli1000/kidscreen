@@ -1,29 +1,48 @@
 <template>
   <q-page class="row items-center justify-evenly q-px-lg q-pb-xl">
-    <q-btn
-      v-if="!isModelSelected"
-      size="xl"
-      color="orange-10"
-      class="full-width"
-      @click="selectModel(52)"
-      >Kidscreen 52</q-btn
-    >
-    <q-btn
-      v-if="!isModelSelected"
-      size="xl"
-      color="pink-10"
-      class="full-width"
-      @click="selectModel(27)"
-      >Kidscreen 27</q-btn
-    >
-    <q-btn
-      v-if="!isModelSelected"
-      size="xl"
-      color="green-10"
-      class="full-width"
-      @click="selectModel(10)"
-      >Kidscreen 10</q-btn
-    >
+    <div class="full-width">
+      <q-btn
+        v-if="!isModelSelected"
+        size="xl"
+        color="orange-10"
+        class="full-width"
+        @click="selectModel(52)"
+        >Kidscreen 52</q-btn
+      >
+      <div class="q-mt-md">
+        Com 52 questões e identifica 10 domínios: bem-estar físico e
+        psicológico, estado emocional, autopercepção, autonomia, ambiente
+        familiar, aspecto financeiro, amigos, ambiente escolar e bullyng.
+      </div>
+    </div>
+    <div class="full-width">
+      <q-btn
+        v-if="!isModelSelected"
+        size="xl"
+        color="pink-10"
+        class="full-width"
+        @click="selectModel(27)"
+        >Kidscreen 27</q-btn
+      >
+      <div class="q-mt-md">
+        Com 27 questões e identifica 5 domínios: bem-estar físico e psicológico,
+        autonomia e ambiente familiar, amigos e apoio social e ambiente escolar.
+      </div>
+    </div>
+    <div class="full-width">
+      <q-btn
+        v-if="!isModelSelected"
+        size="xl"
+        color="green-10"
+        class="full-width"
+        @click="selectModel(10)"
+        >Kidscreen 10</q-btn
+      >
+      <div class="q-mt-md">
+        Com 10 questões e um único domínio: Índice Global de Qualidade de Vida
+        Relacionada à Saúde.
+      </div>
+    </div>
     <div v-if="isModelSelected" class="full-width">
       <q-card>
         <q-card-section>

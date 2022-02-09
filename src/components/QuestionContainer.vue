@@ -5,7 +5,9 @@
         {{ dimensionText }} <br />
         Considerando a última semana:
       </div>
-      <div class="text-h6 text-bold q-mt-sm">{{ questionText }}</div>
+      <div class="text-h6 text-bold q-mt-sm">
+        {{ questionText }}
+      </div>
     </q-card-section>
     <q-card-section
       ><div>

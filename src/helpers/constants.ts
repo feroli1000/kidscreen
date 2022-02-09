@@ -22,8 +22,17 @@ export const HEADER1 = 0; // HEADER_LABELS[0];
 export const HEADER2 = 1; // HEADER_LABELS[1];
 export const HEADER3 = 2; // HEADER_LABELS[2];
 
-export const PASC = 1; // Punctuation Ascendant [1..5]
-export const PDESC = 2; // Punctuation Descendant [5..1]
+/**
+ * Punctuation Ascendant [1..5]
+ * @var Number
+ */
+export const PASC = 1;
+
+/**
+ * Punctuation Descendant [5..1]
+ * @var Number
+ */
+export const PDESC = 2; 
 
 export const PARENTS_OPTIONS: OptionsType[] = [
   { value: 1, text: 'Mãe' },

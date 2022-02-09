@@ -18,7 +18,9 @@
     <div v-if="isDevelopmentMode()">
       {{ currentAnswer }} {{ canForward }} {{ getQuestion() }}
     </div>
+    <div class="text-h5 text-center">{{ questionOfLength }}</div>
     <QuestionnaireDebug
+      v-if="isDevelopmentMode()"
       class="q-mt-xl"
       :button_all="isDevelopmentMode()"
       @all="fillAllForDevelpment"
@@ -75,6 +77,10 @@ export default defineComponent({
 
     const isFinished = computed(
       () => active.value === questionsLength.value - 1
+    );
+
+    const questionOfLength = computed(
+      () => `${active.value + 1} de  ${questionsLength.value}`
     );
 
     let currentQuestion: Question = reactive(
@@ -207,6 +213,7 @@ export default defineComponent({
       questionnaire,
       currentAnswer,
       canForward,
+      questionOfLength,
       forward,
       setAnswer,
       getQuestion,
