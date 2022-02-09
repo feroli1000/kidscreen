@@ -18,7 +18,7 @@
     <div v-if="isDevelopmentMode()">
       {{ currentAnswer }} {{ canForward }} {{ getQuestion() }}
     </div>
-    <div class="text-h5 text-center">{{ questionOfLength }}</div>
+    <div class="text-h5 text-center q-mt-md">{{ questionOfLength }}</div>
     <QuestionnaireDebug
       v-if="isDevelopmentMode()"
       class="q-mt-xl"
